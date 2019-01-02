@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book Trading Club</title>
+    <meta name="description" content="Book Trading Club">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <style>
+    .center {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    a {
+      color: black;
+      text-decoration: none
+    }
+
+    a:hover {
+      color: black;
+      text-decoration: none
+    }
+
+    .nav-text {
+      font-size: 23px;
+    }
+    </style>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <!-- menu bar goes here -->
+            <%if (auth) {%>
+                <a class="button" href="/logout/twitter">
+                    <i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;Logout</a>
+                <%}else{%>
+                    <a class="button button-primary" href="/login/twitter">
+                        <i class="fab fa-twitter fa-lg"></i>&nbsp;Login</a>
+                    <%}%>
+                        <br>
+                        <h2 class="center">
+                            <i class="fas fa-book fa-sm"></i>&nbsp;Book Trading Club</h2>
+                        <%if(auth){%>
+                            <div class="nav-text center">
+                                <a href="/">Home</a> &bull;
+                                <a href="/dashboard">Dashboard</a> &bull;
+                                <a class="right" href="/profile/edit">Edit Profile</a>
+                            </div>
+                            <%}%>
+        </div>
+    </header>
+    <br>
+    <div class="container">
+      <%if(profile.length>0){%>
+        <h5>Name:
+            <%=profile[0].name%>
+        </h5>
+        <h5>City:
+            <%=profile[0].city%>
+        </h5>
+        <h5>State:
+            <%=profile[0].state%>
+        </h5>
+      <%}else{%>
+<h5>User not found.</h5>
+<%}%>
+    </div>
+
+</body>
+
+</html>

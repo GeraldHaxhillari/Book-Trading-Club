@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book Trading Club</title>
+    <meta name="description" content="Book Trading Club">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css" media="all">
+    <link rel="stylesheet" href="https:./style.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <!-- menu bar goes here -->
+            <%if (auth) {%>
+                <a class="button" href="/logout/twitter">
+                    <i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;Logout</a>
+                <%}else{%>
+                    <a class="button button-primary" href="/login/twitter">
+                        <i class="fab fa-twitter fa-lg"></i>&nbsp;Login</a>
+                    <%}%>
+                        <br>
+                        <h2 class="center">
+                            <i class="fas fa-book fa-sm"></i>&nbsp;Book Trading Club</h2>
+                        <%if(auth){%>
+                            <div class="nav-text center">
+                                <a href="/">Home</a> &bull;
+                                <a href="/dashboard">Dashboard</a> &bull;
+                                <a class="right" href="/profile/edit">Edit Profile</a>
+                            </div>
+                            <%}%>
+        </div>
+    </header>
+    <br>
+    <div class="container">
+        <!-- columns should be the immediate child of a .row -->
+        <%if (auth) {%>
+            <div class="row">
+
+                <form action="/" method="post">
+                    <div class="ten columns">
+                        <input class="u-full-width" type="text" placeholder="Enter ISBN Code" name="addBook" required>
+                    </div>
+                    <div class="two columns">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+
+            </div>
+            <%}%>
+                <br>
+                <%for(var i = 0;i < db.length; i++){%>
+                    <% var z = 0;%>
+                        <%var uid_check = 0%>
+                            <%if(auth){%>
+                                <%if(db[i].uid == uid){%>
+                                    <%uid_check = 1%>
+                                        <%}%>
+                                            <%var x = String(db[i].user_request).split(",");%>
+                                                <%for(var j = 0;j<x.length-1;j++){%>
+                                                    <%if(x[j] == uid){%>
+                                                        <%z=1;%>
+                                                            <%}%>
+                                                                <%}%>
+                                                                    <%}%>
+                                                                        <%if(db[i].accept == 0 && z == 0 && uid_check == 0){%>
+
+                                                                            <%if((i+1) % 3 == 1){%>
+
+                                                                                <div class="row">
+                                                                                    <div class="one-third column center">
+
+                                                                                        <a href="/request/book/<%=db[i].isbn%>/<%=db[i].uid%>">
+                                                                                            <img src="<%=db[i].thumb%>" alt="Cover" class="u-max-full-width">
+                                                                                            <div class="bold">
+                                                                                                <%=db[i].title%>
+                                                                                            </div>
+                                                                                        </a>
+                                                                                        <a href="/profile/show/<%=db[i].uid%>" style="text-decoration: underline;">
+                                                                                            <div>
+                                                                                                <%=db[i].uid%>
+                                                                                            </div>
+                                                                                        </a>
+
+                                                                                    </div>
+                                                                                    <%}else{%>
+                                                                                        <div class="one-third column center">
+
+                                                                                            <a href="/request/book/<%=db[i].isbn%>/<%=db[i].uid%>">
+                                                                                                <img src="<%=db[i].thumb%>" alt="Cover" class="u-max-full-width">
+                                                                                                <div class="bold">
+                                                                                                    <%=db[i].title%>
+                                                                                                </div>
+                                                                                            </a>
+                                                                                            <a href="/profile/show/<%=db[i].uid%>" style="text-decoration: underline;">
+                                                                                                <div>
+                                                                                                    <%=db[i].uid%>
+                                                                                                </div>
+                                                                                            </a>
+
+                                                                                        </div>
+                                                                                        <%}%>
+
+                                                                                            <%if((i+1)%3 == 0 || db.length-1 == i){%>
+                                                                                </div>
+                                                                                <br>
+                                                                                <%}%>
+
+                                                                                    <%}%>
+
+                                                                                        <%}%>
+
+    </div>
+
+</body>
+
+</html>
