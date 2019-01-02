@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book Trading Club</title>
+    <meta name="description" content="Book Trading Club">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <style>
+        .center {
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        a {
+            color: black;
+            text-decoration: none
+        }
+
+        a:hover {
+            color: black;
+            text-decoration: none
+        }
+
+        .nav-text {
+            font-size: 23px;
+        }
+    </style>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <!-- menu bar goes here -->
+            <%if (auth) {%>
+                <a class="button" href="/logout/twitter">
+                    <i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;Logout</a>
+                <%}else{%>
+                    <a class="button button-primary" href="/login/twitter">
+                        <i class="fab fa-twitter fa-lg"></i>&nbsp;Login</a>
+                    <%}%>
+                        <br>
+                        <h2 class="center">
+                            <i class="fas fa-book fa-sm"></i>&nbsp;Book Trading Club</h2>
+                        <%if(auth){%>
+                            <div class="nav-text center">
+                                <a href="/">Home</a> &bull;
+                                <a href="/dashboard">Dashboard</a> &bull;
+                                <a class="right" href="/profile/edit">Edit Profile</a>
+                            </div>
+                            <%}%>
+        </div>
+    </header>
+    <br>
+    <div class="container">
+        <h4>Your Books</h4>
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(var i=0;i<userBooks.length;i++){%>
+                    <tr>
+                        <td>
+                            <%=userBooks[i].isbn%>
+                        </td>
+                        <td>
+                            <%=userBooks[i].title%>
+                        </td>
+                        <%if(userBooks[i].accept == 0){%>
+                            <td>Pending</td>
+                            <%}else{%>
+                                <td>Trade Complete</td>
+                                <%}%>
+                                    <td>
+                                        <a href="/remove/book/<%=userBooks[i].isbn%>">
+                                            <i class="fas fa-trash-alt"></i>&nbsp;Delete
+                                        </a>
+                                    </td>
+                    </tr>
+                    <%}%>
+            </tbody>
+        </table>
+
+
+
+        <h4>Accepted</h4>
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>From</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(var i=0;i<userBooks2.length;i++){%>
+                    <%if(userBooks2[i].uid != user && userBooks2[i].accept == user){%>
+                        <tr>
+                            <td>
+                                <%=userBooks2[i].isbn%>
+                            </td>
+                            <td>
+                                <%=userBooks2[i].title%>
+                            </td>
+                            <td>
+                                <a href="/profile/show/<%=userBooks2[i].uid%>" style="text-decoration: underline;">
+                                    <%=userBooks2[i].uid%>
+                                </a>
+                            </td>
+                        </tr>
+                        <%}%>
+                            <%}%>
+            </tbody>
+        </table>
+
+
+
+        <h4>Pending</h4>
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>From</th>
+                    <th>Action</th>
+            </thead>
+            <tbody>
+                <%for(var i=0;i<userBooks3.length;i++){%>
+                    <%if(userBooks[i].accept == 0){%>
+                        <%var x = String(userBooks3[i].user_request).split(",");%>
+                            <%for(var j = 0;j<x.length-1;j++){%>
+                                <tr>
+                                    <td>
+                                        <%=userBooks3[i].isbn%>
+                                    </td>
+                                    <td>
+                                        <%=userBooks3[i].title%>
+                                    </td>
+                                    <td>
+                                        <a href="/profile/show/<%=x[j]%>" style="text-decoration: underline;">
+                                            <%=x[j]%>
+                                        </a>
+                                    </td>
+                                    <td><a href="/accept/book/<%=userBooks3[i].isbn%>/<%=x[j]%>"><i class="fas fa-check"></i>&nbsp;Accept</a></td>
+                                </tr>
+                                <%}%>
+                                    <%}%>
+                                        <%}%>
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>

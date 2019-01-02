@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Book Trading Club</title>
+    <meta name="description" content="Book Trading Club">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    <style>
+    .center {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    a {
+      color: black;
+      text-decoration: none
+    }
+
+    a:hover {
+      color: black;
+      text-decoration: none
+    }
+
+    .nav-text {
+      font-size: 23px;
+    }
+    </style>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <!-- menu bar goes here -->
+            <%if (auth) {%>
+                <a class="button" href="/logout/twitter">
+                    <i class="fas fa-sign-out-alt fa-lg"></i>&nbsp;Logout</a>
+                <%}else{%>
+                    <a class="button button-primary" href="/login/twitter">
+                        <i class="fab fa-twitter fa-lg"></i>&nbsp;Login</a>
+                    <%}%>
+                        <br>
+                        <h2 class="center">
+                            <i class="fas fa-book fa-sm"></i>&nbsp;Book Trading Club</h2>
+                        <%if(auth){%>
+                            <div class="nav-text center">
+                                <a href="/">Home</a> &bull;
+                                <a href="/dashboard">Dashboard</a> &bull;
+                                <a class="right" href="/profile/edit">Edit Profile</a>
+                            </div>
+                            <%}%>
+        </div>
+    </header>
+    <br>
+    <div class="container">
+      <form action="/profile/edit" method="post">
+       <label for="nameInput">Name</label>
+       <input class="u-full-width" type="text" id="nameInput" name="nameInput" value="<%=profile[0].name%>">
+      <label for="cityInput">City</label>
+       <input class="u-full-width" type="text" id="cityInput" name="cityInput" value="<%=profile[0].city%>">
+      <label for="stateInput">State</label>
+       <input class="u-full-width" type="text" id="stateInput" name="stateInput" value="<%=profile[0].state%>">
+         <input class="button-primary" type="submit" value="Submit">
+      </form>
+    </div>
+
+</body>
+
+</html>
